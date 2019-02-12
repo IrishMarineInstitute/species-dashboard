@@ -1,5 +1,5 @@
 #
-# This is the server logic of a Shiny web application. You can run the 
+# This is the ui of a Shiny web application. You can run the 
 # application by clicking 'Run App' above.
 #
 # Find out more about building applications with Shiny here:
@@ -67,14 +67,12 @@ shinyUI(
                                             ), #close column
                                      column(width = 6,
                                             conditionalPanel(condition = "input.tabs == 'A'",
-                                                             #imageOutput("fgmap1",height ="100%"),
-                                                             leafletOutput("intromap1")),
+                                                             imageOutput("fgmap1",height ="100%")),
                                             conditionalPanel(condition = "input.tabs == 'B'",
                                                              imageOutput("fgmap2",height ="100%"),
                                                              htmlOutput("intro_tabsetmap2")),
                                             conditionalPanel(condition = "input.tabs == 'C'",
                                                              imageOutput("fgmap3"),
-                                                             #leafletOutput("intromap"),
                                                              br(),
                                                              br(),
                                                              br(),
@@ -98,17 +96,7 @@ shinyUI(
                                               )#close column
                                       ) #close fluidRow1 
                             ), #close tabPanel 
- #fluidRow(
-   #column(3,HTML('<footer>
-#<img src="Irelands_EU_ESIF_2014_2020_en.jpg", width = "300px", height = "100px",style="margin-top: 25em; margin-left: 5px; margin-right: 5px;"</img> 
-     #   </footer>')),
-   #column(3,img(src="dafm LogoArtboard 1@2x.png", width = "300px", height = "100px",style="margin-top: 2em;")),
-   #column(3,img(src="EU logo with text.jpg", width = "280px", height = "170px",style="margin-left: -15px;")),
-   #column(3,img(src="Marine_logo_rgb.jpg", width = "320px", height = "90px",style="margin-left: -30px;margin-top: 2em;"))),
-  # HTML('<footer>
-        #<img src="Niamh.png", width = "1250px", height = "100px", style="display: block; margin-left:-10em; margin-right: auto;margin-top:0em"</img> 
-       # </footer>')),  
-   
+
     
 ##### Fish sp tab - option selectors ######  
                     tabPanel("Fish Species",
