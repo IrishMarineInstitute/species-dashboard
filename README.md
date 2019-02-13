@@ -1,5 +1,7 @@
   <h1>Informatics Phase 1 Projects</h1>
-  <p><b>Informatics Projects</b></p>
+  <p><b><h2>Informatics Projects</h2></b></p>
+  <p><b>Species Dashboard</b></p>
+  <p>People can learn about fish species in Irish waters and explore their data with the Species Dashboard - this is a web application that makes biological fisheries data more available to all interested parties. In particular, it allows people to explore the length, weight, and age data of commercial species that are caught around Ireland and allows the effects of factors such as years, sex, area, and gear on the fish to be investigated.</p>
   <p>Below are the links to the source code for each of the phase 1 projects.  As well as source code there is links to docker hub images for running each of the applications</p>
   <p><a href="https://github.com/IrishMarineInstitute/species-dashboard">Species Dashboard</a></p>
   <p><a href="https://github.com/IrishMarineInstitute/igfs-data-explorer">Irish Groudfish Survey</a></p>
