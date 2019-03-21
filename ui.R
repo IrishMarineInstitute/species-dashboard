@@ -23,16 +23,13 @@ shinyUI(
         navbarPage("Species Dashboard", theme= shinytheme("cerulean"), fluid=TRUE,
  ##### Intro #####                    
                    tabPanel("Introduction",
-                            #tags$style(type = 'text/css', 
-                                       #"footer{position: absolute; bottom:5%; left: 33%; padding:5px;}"
-                            #),
+                          
                             tags$head(includeScript("google-analytics.js")),                 
                             fluidRow(
                                      column(width = 6,
                                             tabsetPanel(id= "tabs",
                                                         tabPanel("Fishing Grounds", value = "A", 
                                                                  p(), htmlOutput("intro_tabset1"),
-                                                                 #div(p(HTML(paste0('You can download this shapefile using the ',a(href="https://atlas.marine.ie/",'Marine Atlas')))))),
                                                                  div(p(HTML(paste0('Funding for this project was provided by the EMFF ',br(),
                                                                                    p(),
                                                                                    img(src="Logos/Irelands_EU_ESIF_2014_2020_en.jpg", width = "300px", height = "100px")))))),
@@ -96,8 +93,6 @@ shinyUI(
                                               )#close column
                                       ) #close fluidRow1 
                             ), #close tabPanel 
-
-    
 ##### Fish sp tab - option selectors ######  
                     tabPanel("Fish Species",
                               fluidRow(
@@ -109,7 +104,7 @@ shinyUI(
                                                                                  "Hake","Horse Mackerel","Ling","Mackerel",
                                                                                  "Megrim","White-bellied Anglerfish",
                                                                                  "Black-bellied Anglerfish","Plaice", "Sole","Sprat",
-                                                                                 "Blue Whiting","Whiting","Saithe","Pollack"),#"All species",, "Scallop", "Nephrops"
+                                                                                 "Blue Whiting","Whiting","Saithe","Pollack"),
                                                                    selected= "Cod" ),
                                                        conditionalPanel(condition = "input.fishtab == 'A'",
                                                                         selectInput(inputId="biooptionselection", label="Select parameter", 
@@ -130,8 +125,7 @@ shinyUI(
                                                                         uiOutput("yearfilter")),
                                                        conditionalPanel(condition="input.fishtab == 'B'",
                                                                         uiOutput("quarterfilter.a"),
-                                                                        uiOutput("yearfilter.a"))#,
-                                                       
+                                                                        uiOutput("yearfilter.a"))
                                                       ),
                                                 column(width=3,
                                                        conditionalPanel("input.fishtab == 'A'",
@@ -146,12 +140,11 @@ shinyUI(
                                                        conditionalPanel("input.fishtab == 'B'",                 
                                                                         downloadButton("downloadDatala", "Download data",class="btn btn-outline-primary"),
                                                                        br(),
-                                                                       downloadLink("downloadDatala_full", "Download full dataset")))#,
+                                                                       downloadLink("downloadDatala_full", "Download full dataset")))
                                                  ),
 ##### Fish sp tab - Maps and plots  ######                                     
                                         fluidRow(
                                           column(width=12,
-                                                 #GEN
                                                  conditionalPanel(condition = "input.fishtab == 'A'",
                                                                   plotlyOutput("bio_lw")
                                                                   %>% withSpinner(color="#0dc5c1")),
@@ -163,7 +156,7 @@ shinyUI(
                                         fluidRow(
                                             column(width=10, 
                                                   conditionalPanel(condition = "input.fishtab == 'C'",
-                                                                   imageOutput("fish_b1", height="100%"),#HTML("<br><br><br><br><br>"),
+                                                                   imageOutput("fish_b1", height="100%"),
                                                                    tags$style(HTML(".js-irs-0 .irs-grid-pol.small {height: 4px;}")),
                                                                    tags$style(HTML(".js-irs-1 .irs-grid-pol.small {height: 0px;}")),
                                                                    sliderInput("slideryear", "Choose Year:",
@@ -171,8 +164,7 @@ shinyUI(
                                                                                value = 2016, step = 1,
                                                                                sep = "",
                                                                                animate = TRUE)),offset=4,style = "margin-top:-5em"))
-                                            
-                                ),#column 
+                                ), 
 ##### Fish sp tab - Species tabsets #####
                                        column(width = 5,
                                               tabsetPanel(id = "fishtab",
