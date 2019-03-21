@@ -8,8 +8,8 @@
 #
 
 # Load in the data
-#bio.data <- readRDS("bio.data.sample20180510.rds")
-bio.data <- readRDS("CompleteLengthCases20180510.rds")
+#bio.data <- readRDS("bio.data.sample20190321.rds")
+bio.data <- readRDS("CompleteLengthCases20190321.rds")
 Cod.data<- filter(bio.data, Species=="Cod")
 Boarfish.data <- filter(bio.data, Species=="Boarfish")
 Haddock.data<- filter(bio.data, Species=="Haddock")
@@ -29,8 +29,8 @@ Sprat.data<- filter(bio.data, Species=="Sprat")
 WHB.data<- filter(bio.data, Species=="Blue Whiting")
 WHG.data<- filter(bio.data, Species=="Whiting")
 
-#cc.age<- readRDS("cc.age.sample20180510.rds")
-cc.age<- readRDS("CompleteAgeCases20180510.rds")
+#cc.age<- readRDS("cc.age.sample20190321.rds")
+cc.age<- readRDS("CompleteAgeCases20190321.rds")
 Cod.data.a<- filter(cc.age, Species=="Cod")
 Boarfish.data.a <- filter(cc.age, Species=="Boarfish")
 Haddock.data.a<- filter(cc.age, Species=="Haddock")
@@ -56,10 +56,6 @@ Mode <- function(x) {
   ux <- unique(x)
   ux[which.max(tabulate(match(x, ux)))]
 }
-
-#grounds <- readOGR(dsn=paste0(getwd(),'/Shapefiles/'),layer='FishingGrounds2')
-
-
 # Define server logic 
 shinyServer(function(input, output, session){
   
@@ -74,8 +70,7 @@ showModal(modalDialog(
   output$intromap1 <- renderLeaflet({
     leaflet() %>% 
       addProviderTiles(providers$Esri.OceanBasemap) %>% 
-      setView(lng = -8.2124, lat = 53.2734, zoom = 6) # %>% 
-      #addPolygons(data=grounds)
+      setView(lng = -8.2124, lat = 53.2734, zoom = 6)
   })
   output$fgmap1<-renderImage({ 
     filename <- normalizePath(file.path('www',paste("FishingGrounds",'.jpg', sep='')))
@@ -126,7 +121,6 @@ showModal(modalDialog(
   output$intro_tabset5b <- renderText({
     as.character(Supp_table[which(Supp_table[,"Fish"] == "All Species"),"Ageing2"])})
   
-
   ####### Fish Species page #######
   output$fish_b1a<- renderText({
     as.character(Supp_table[which(Supp_table[,"Fish"] %in% input$species),"b1a"])
@@ -152,7 +146,6 @@ showModal(modalDialog(
   })
   
 ##### Age/length widget ######
-  #x1 <- (cc.age$Age[which(cc.age$Species=="Boarfish" & cc.age$Length== 10)])
   x1 <- reactive({cc.age$Age[which(cc.age$Species==paste(input$species) & cc.age$Length== paste(input$lengthcm))]})
   output$agerange <- reactive({
    if (length(x1())<3) {
@@ -164,6 +157,7 @@ showModal(modalDialog(
   output$mode <- reactive({
    paste(Mode(x1()), sep=" ")
    })
+  
 ##### Histogram #######
   observeEvent(input$showhist, {
     y1 <- reactive({cc.age$AgeContin[which(cc.age$Species==paste(input$species) & cc.age$Length== paste(input$lengthcm))]})
@@ -267,13 +261,9 @@ showModal(modalDialog(
   #Creating Sub Area filter based on the full data
   output$spatialops.w <- renderUI({
     unqsub = factor(append("All", as.character(unique(grsp()$ICESDivFullName))))
-    #pickerInput(inputId = "subselect",label = "ICES Areas", choices= as.list(unqsub),
-                #selected = "All", multiple = TRUE, options = list('actions-box' =TRUE),
-                #inline = FALSE)
     checkboxGroupInput(inputId = "subselect",label= "ICES Area", choices = as.list(unqsub),
                        selected= "All", inline = TRUE)
-    #selectInput("subselect","ICES Areas", choices=as.list(unqsub), selected= "All")
-  }) 
+    }) 
   
   #Update the Area filter based on the full data being filtered by year, quarter, #month and gear
   observe({
@@ -281,10 +271,8 @@ showModal(modalDialog(
       return()
     }else{# ....
       x <-factor(append("All", as.character(unique(grspnew.w()$ICESDivFullName))))
-      #updatePickerInput(session, "subselect",label= "ICEA Areas-updated",selected = "All",choices=x)
       updateCheckboxGroupInput(session, "subselect",label="ICES Areas", choices=x,
                                selected= "All", inline = TRUE)
-      #updateSelectInput(session, "subselect","ICES Areas", choices=x)
     }
   })
   
@@ -308,7 +296,7 @@ output$downloadDatalw <- downloadHandler(
 ####Download Full Data #####
 output$downloadDatalw_full <- downloadHandler(
   filename = function() {
-    bio.data.full<- readRDS("CompleteLengthCases20180510.rds")    ###### Must be updated to most recent file on each update #####
+    bio.data.full<- readRDS("CompleteLengthCases20190321.rds")    ###### Must be updated to most recent file on each update #####
     paste("LWdataFULL",".csv", sep = "")
   },
   content = function(file) {
@@ -384,10 +372,6 @@ output$bio_lw<- renderPlotly({
       p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter',color=~Weight, colors="Spectral",
                    mode = 'markers', marker =list(opacity = 0.5),
                    text=~paste("length:",Length,"cm<br>weight:",Weight, "grams<br>Date:", Date)) %>%
-       #add_lines(~fitted(loess(grspnew.w1()$Length~grspnew.w1()$Weight,grspnew.w1())),
-                   #line= list(color='#ffdb00'),
-                 # name = "Loess Smoother") %>%
-        
         layout(hovermode=TRUE, title=paste(input$species," Length vs Weight", sep=""),
                xaxis = list(title = 'Length (cm)', range= c(min(grspnew.w1()$Length), max(grspnew.w1()$Length)+1)),
                yaxis = list(title = 'Weight (g)', range = c(0, max(grspnew.w1()$Weight, na.rm = T)*1.05)),
@@ -396,7 +380,6 @@ output$bio_lw<- renderPlotly({
       p$elementId <- NULL
       p
       }
- 
     })
 
 ######## Age/Weight ########
@@ -491,9 +474,6 @@ grspage <- reactive({
 #Creating Sub Area filter based on the full data
 output$spatialops.a <- renderUI({
   unqsub.a = factor(append("All", as.character(unique(cc.a()$ICESDivFullName))))
-  #pickerInput(inputId = "subselect.a",label = "ICES Areas", choices= as.list(order(unqsub.a)),
-              #selected = "All", multiple = TRUE, options = list('actions-box' =TRUE),
-              #inline = FALSE)
   checkboxGroupInput(inputId = "subselect.a",label= "ICES Area", choices = as.list(unqsub.a),
                      selected= "All", inline = TRUE)
 }) 
@@ -517,8 +497,6 @@ grspnew.a1<- reactive({
     grspageSub <- filter(grspage(), ICESDivFullName %in% input$subselect.a)}
 })
 
-#mx <- reactive({mean(grspnew.a1$Length)})
-
 ####Age Data downloader
 output$downloadDatala <- downloadHandler(
   filename = function() {
@@ -531,7 +509,7 @@ output$downloadDatala <- downloadHandler(
 ##### Full data downloader ######
 output$downloadDatala_full<- downloadHandler(
   filename = function() {
-    cc.age.full<- readRDS("CompleteAgeCases20180510.rds")   ###### Must be updated to most recent file on each update #####
+    cc.age.full<- readRDS("CompleteAgeCases20190321.rds")   ###### Must be updated to most recent file on each update #####
     paste("LAdataFULL",".csv", sep = "")
   },
   content = function(file) {

@@ -12,7 +12,6 @@ library(shiny)
 library(leaflet)
 library(dplyr)
 library(shinythemes)
-library(sf)
 library(plotly)
 library(FSA)
 library(htmltools)
@@ -161,7 +160,8 @@ shinyUI(
                                                                    tags$style(HTML(".js-irs-1 .irs-grid-pol.small {height: 0px;}")),
                                                                    sliderInput("slideryear", "Choose Year:",
                                                                                min = 2007, max = 2016,
-                                                                               value = 2016, step = 1,
+                                                                               min = 2007, max = 2018, #change after yearly update
+                                                                               value = 2018, step = 1,
                                                                                sep = "",
                                                                                animate = TRUE)),offset=4,style = "margin-top:-5em"))
                                 ), 
