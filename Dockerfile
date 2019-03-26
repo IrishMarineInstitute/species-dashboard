@@ -13,12 +13,14 @@ RUN Rscript -e "install.packages(c('shinythemes','shinycssloaders','FSA'), repos
 COPY www /srv/shiny-server/www
 COPY CompleteAgeCases20190321.rds /srv/shiny-server/
 COPY CompleteLengthCases20190321.rds /srv/shiny-server/
+COPY cc.age.sample20190321.rds /srv/shiny-server/
+COPY bio.data.sample20190321.rds /srv/shiny-server/
 COPY google-analytics.js /srv/shiny-server/
 COPY README.md /srv/shiny-server/
 COPY server.R /srv/shiny-server/
 COPY ["Supplemental data.csv","/srv/shiny-server/"]
 COPY ui.R /srv/shiny-server/
-COPY FullData /srv/shiny-server/
+COPY FullData.rds /srv/shiny-server/
 COPY ["Data extraction and formatting.R", "/srv/shiny-server/"]
 RUN Rscript -e "install.packages(c('rgdal'), repos='https://cran.rstudio.com/')"
 EXPOSE 3838
