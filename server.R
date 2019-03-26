@@ -1,4 +1,3 @@
-#
 # This is the server logic of a Shiny web application. You can run the 
 # application by clicking 'Run App' above.
 #
@@ -6,10 +5,9 @@
 # 
 #    http://shiny.rstudio.com/
 #
-
 # Load in the data
-#bio.data <- readRDS("bio.data.sample20190321.rds")
-bio.data <- readRDS("CompleteLengthCases20190321.rds")
+bio.data <- readRDS("bio.data.sample20190321.rds")
+bio.data.full <- readRDS("CompleteLengthCases20190321.rds")
 Cod.data<- filter(bio.data, Species=="Cod")
 Boarfish.data <- filter(bio.data, Species=="Boarfish")
 Haddock.data<- filter(bio.data, Species=="Haddock")
@@ -29,8 +27,8 @@ Sprat.data<- filter(bio.data, Species=="Sprat")
 WHB.data<- filter(bio.data, Species=="Blue Whiting")
 WHG.data<- filter(bio.data, Species=="Whiting")
 
-#cc.age<- readRDS("cc.age.sample20190321.rds")
-cc.age<- readRDS("CompleteAgeCases20190321.rds")
+cc.age<- readRDS("cc.age.sample20190321.rds")
+cc.age.full<- readRDS("CompleteAgeCases20190321.rds")
 Cod.data.a<- filter(cc.age, Species=="Cod")
 Boarfish.data.a <- filter(cc.age, Species=="Boarfish")
 Haddock.data.a<- filter(cc.age, Species=="Haddock")

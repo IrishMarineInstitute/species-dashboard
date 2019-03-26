@@ -1,4 +1,3 @@
-#
 # This is the ui of a Shiny web application. You can run the 
 # application by clicking 'Run App' above.
 #
@@ -6,7 +5,6 @@
 # 
 #    http://shiny.rstudio.com/
 #
-
 ##### Packages #####
 library(shiny)
 library(leaflet)
@@ -159,7 +157,6 @@ shinyUI(
                                                                    tags$style(HTML(".js-irs-0 .irs-grid-pol.small {height: 4px;}")),
                                                                    tags$style(HTML(".js-irs-1 .irs-grid-pol.small {height: 0px;}")),
                                                                    sliderInput("slideryear", "Choose Year:",
-                                                                               min = 2007, max = 2016,
                                                                                min = 2007, max = 2018, #change after yearly update
                                                                                value = 2018, step = 1,
                                                                                sep = "",
