@@ -55,8 +55,57 @@ Mode <- function(x) {
   ux <- unique(x)
   ux[which.max(tabulate(match(x, ux)))]
 }
+
+SpeciesList <- data.frame(IC_Species = c("COD","BOC","HAD","HER",
+                                      "HKE","HOM","LIN","MAC",
+                                      "MEG","MON",
+                                      "ANK","PLE", "SOL","SPR",
+                                      "WHB","WHG","POK","POL"), 
+                       Species_Name = c("Cod","Boarfish","Haddock","Herring",
+                                       "Hake","Horse Mackerel","Ling","Mackerel",
+                                       "Megrim","White-bellied Anglerfish",
+                                       "Black-bellied Anglerfish","Plaice", "Sole","Sprat",
+                                       "Blue Whiting","Whiting","Saithe","Pollack"), 
+                       stringsAsFactors=FALSE)
+
+
 # Define server logic 
 shinyServer(function(input, output, session){
+  
+  ## Read parameter strings from the URL and update the "species" selectInput appropriately
+  observe({
+    urlParameters <- parseQueryString(session$clientData$url_search)
+    ## If we have a species parameter in the URL we will try and use it to
+    ## choose our default species
+    if (!is.null(urlParameters[['species']])) {
+      
+      speciesURLParameter <- urlParameters[['species']]
+
+      # Try and find the description for the parameter passed in
+      speciesURLName <- SpeciesList[tolower(SpeciesList$IC_Species)==tolower(speciesURLParameter),"Species_Name"]
+      
+      # If we didn't get a match just use the first species in the data frame as the default species
+      if (length(speciesURLName) == 0){
+        speciesURLName <- SpeciesList[1,"Species_Name"]
+      }
+      
+      updateSelectInput(session, 
+                        "species",label="Species",
+                  choices= SpeciesList$Species_Name,
+                  selected= speciesURLName )
+      
+    } 
+    ## Else we 'll just use the first species in the data frame as the default species
+    else 
+    {
+      updateSelectInput(session, 
+                        "species",label="Species",
+                        choices= SpeciesList$Species_Name,
+                        selected= SpeciesList[1,"Species_Name"] )
+      
+    }
+  })
+  
   
 showModal(modalDialog(
     title = "Please note",
