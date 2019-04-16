@@ -17,11 +17,11 @@ library(shinycssloaders)
 library(rgdal)
 
 shinyUI(
-        navbarPage("Species Dashboard", theme= shinytheme("cerulean"), fluid=TRUE,
+        navbarPage(id="TopLevelMenu", title="Species Dashboard", theme= shinytheme("cerulean"), fluid=TRUE,
  ##### Intro #####                    
                    tabPanel("Introduction",
                           
-                            tags$head(includeScript("google-analytics.js")),                 
+                            tags$head(includeScript("google-analytics.js")),            
                             fluidRow(
                                      column(width = 6,
                                             tabsetPanel(id= "tabs",

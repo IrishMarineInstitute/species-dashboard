@@ -94,6 +94,11 @@ shinyServer(function(input, output, session){
                   choices= SpeciesList$Species_Name,
                   selected= speciesURLName )
       
+ 
+      #Show the Fish Species tab using SELECT - this is a bit of hack to make sure the
+      # user is taken to the Fish Species page first
+      showTab("TopLevelMenu","Fish Species",select= TRUE, session)
+      
     } 
     ## Else we 'll just use the first species in the data frame as the default species
     else 
