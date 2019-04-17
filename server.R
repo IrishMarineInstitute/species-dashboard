@@ -308,7 +308,8 @@ output$bio_lw<- renderPlotly({
    if(input$biooptionselection=="Sex"){
       grspnew.w1 <- filter(grspnew.w1(), !is.na(Sex))
       p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', 
-                   text=~paste("length:",Length,"cm","<br>weight:",Weight, "grams<br>date:", Date), 
+                   text=~paste("length:",Length,"cm","<br>weight:",Weight, "grams<br>date:", Date),
+                   hoverinfo='text',
                    color = ~Sex, colors=c('M'='#6699ff','O'='#cccccc','U'='#999999','F'='#ff66cc','I'='#ccff99'),
                    mode = 'markers', marker =list(opacity = 0.5)) %>% 
         layout(hovermode=TRUE, title=paste(input$species,"Length vs Weight (points coloured by sex)"),
@@ -320,7 +321,7 @@ output$bio_lw<- renderPlotly({
       p 
     }else if(input$biooptionselection=="Age"){
       grspnew.w1 <- filter(grspnew.w1(), Age>-1)
-      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',
+      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',hoverinfo='text',
                    text=~paste("length:",Length,"cm","<br>weight:",Weight, "grams<br>date:", Date, "<br>Age:", Age),
                    color= ~Age, marker =list(opacity = 0.5)) %>%  
         layout(hovermode=TRUE, title=paste(input$species,"Length vs Weight (points coloured by age)"),
@@ -332,7 +333,7 @@ output$bio_lw<- renderPlotly({
       p 
     }else if(input$biooptionselection=="Presentation"){
       grspnew.w1 <- filter(grspnew.w1(), !is.na(Presentation))
-      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',
+      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',hoverinfo='text',
                    text=~paste("length:",Length,"cm","<br>weight:",Weight, "grams<br>date:", Date, "<br>presentation:", Presentation),
                    color= ~Presentation, marker =list(opacity = 0.5)) %>%  
         layout(hovermode=TRUE, title=paste(input$species,"Length vs Weight (points coloured by sample presentation)"),
@@ -344,7 +345,7 @@ output$bio_lw<- renderPlotly({
       p 
     }else if(input$biooptionselection=="Sample Type"){
       grspnew.w1 <- filter(grspnew.w1(), !is.na(Type))
-      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',
+      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',hoverinfo='text',
                    text=~paste("length:",Length,"cm","<br>weight:",Weight, "grams<br>date:", Date, "<br>sample type:",Type), 
                    color= ~Type, marker =list(opacity = 0.5)) %>%  
         layout(hovermode=TRUE, title=paste(input$species,"Length vs Weight (points coloured by sample type)"),
@@ -356,7 +357,7 @@ output$bio_lw<- renderPlotly({
       p 
     }else if(input$biooptionselection=="Gear"){
       grspnew.w1 <- filter(grspnew.w1(), !is.na(Gear))
-      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',
+      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter', mode = 'markers',hoverinfo='text',
                    text=~paste("length:",Length,"cm","<br>weight:",Weight, "grams<br>date:", Date, "<br>gear type:",Gear),
                    color= ~Gear, marker =list(opacity = 0.5)) %>%  
         layout(hovermode=TRUE, title=paste(input$species,"Length vs Weight (points coloured by gear type)"),
@@ -368,8 +369,8 @@ output$bio_lw<- renderPlotly({
       p 
       }
    else{
-      p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter',color=~Weight, colors="Spectral",
-                   mode = 'markers', marker =list(opacity = 0.5),
+        p <- plot_ly(grspnew.w1(), x = ~Length, y = ~Weight, type = 'scatter',color=~Weight, colors="Spectral",
+                   mode = 'markers', marker =list(opacity = 0.5), hoverinfo='text',
                    text=~paste("length:",Length,"cm<br>weight:",Weight, "grams<br>Date:", Date)) %>%
         layout(hovermode=TRUE, title=paste(input$species," Length vs Weight", sep=""),
                xaxis = list(title = 'Length (cm)', range= c(min(grspnew.w1()$Length), max(grspnew.w1()$Length)+1)),
@@ -517,7 +518,8 @@ output$downloadDatala_full<- downloadHandler(
 
 output$bio_la<- renderPlotly({
   if(input$ageoptionselection=="Sex"){
-    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin , y =grspnew.a1()$Length, type = 'scatter', mode = 'markers',
+    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin , y =grspnew.a1()$Length,
+                 type = 'scatter', mode = 'markers',hoverinfo='text',
                  text=~paste("length:",Length,"cm","<br>age:",AgeContin, "<br>date:", Date), 
                  color = ~Sex, colors=c('U'='#999999','M'='#6699ff','O'='#cccccc','F'='#ff66cc','I'='#ccff99'),
                  mode = 'markers', marker =list(opacity = 0.5)) %>% 
@@ -530,7 +532,8 @@ output$bio_la<- renderPlotly({
     p 
   }else if(input$ageoptionselection=="Presentation"){
     grspnew.a1 <- filter(grspnew.a1(), !is.na(Presentation))
-    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length, type = 'scatter', mode = 'markers',
+    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length, 
+                 type = 'scatter', mode = 'markers',hoverinfo='text',
                  text=~paste("length:",Length,"cm","<br>age:",AgeContin, "<br>date:", Date, "<br>presentation:", Presentation),
                  color= ~Presentation, marker =list(opacity = 0.5)) %>%  
       layout(hovermode=TRUE, title=paste(input$species,"age at length (points coloured by presentation)"),
@@ -542,7 +545,8 @@ output$bio_la<- renderPlotly({
     p 
   }else if(input$ageoptionselection=="Sample Type"){
     grspnew.a1 <- filter(grspnew.a1(), !is.na(Type))
-    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length,  type = 'scatter', mode = 'markers',
+    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length,
+                 type = 'scatter', mode = 'markers',hoverinfo='text',
                  text=~paste("length:",Length,"cm","<br>age:",AgeContin, "<br>date:", Date, "<br>sample type:",Type),
                  color= ~Type,marker =list(opacity = 0.5)) %>%  
       layout(hovermode=TRUE, title=paste(input$species,"age at length (points coloured by sample type)"),
@@ -554,7 +558,8 @@ output$bio_la<- renderPlotly({
     p 
   }else if(input$ageoptionselection=="Gear"){
     grspnew.a1 <- filter(grspnew.a1(), !is.na(Gear))
-    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length,  type = 'scatter', mode = 'markers',
+    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length,
+                 type = 'scatter', mode = 'markers',hoverinfo='text',
                  text=~paste("length:",Length,"cm","<br>age:",AgeContin, "<br>date:", Date, "<br>gear type:",Gear),
                  color= ~Gear, marker =list(opacity = 0.5)) %>%  
       layout(hovermode=TRUE, title=paste(input$species,"age at length (points coloured by gear type)"),
@@ -565,7 +570,8 @@ output$bio_la<- renderPlotly({
     p$elementId <- NULL
     p 
   }else{
-    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length,  color= ~Age, colors = 'Paired',
+    p <- plot_ly(grspnew.a1(), x = grspnew.a1()$AgeContin, y = grspnew.a1()$Length,
+                 color= ~Age, colors = 'Paired',hoverinfo='text',
                  type = 'scatter', mode = 'markers', marker =list(opacity = 0.5),
                  text=~paste("length:",Length,"cm","<br>age:",AgeContin))%>% 
       layout(hovermode=TRUE, title=paste(input$species,"age at length"),
