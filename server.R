@@ -6,8 +6,8 @@
 #    http://shiny.rstudio.com/
 #
 # Load in the data
-# this is a test ####
-bio.data <- readRDS("bio.data.sample20190321.rds")
+
+bio.data <- readRDS("bio.data.sample20190423.rds")
 bio.data.full <- readRDS("CompleteLengthCases20190321.rds")
 Cod.data<- filter(bio.data, Species=="Cod")
 Boarfish.data <- filter(bio.data, Species=="Boarfish")
