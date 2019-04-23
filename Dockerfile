@@ -14,7 +14,7 @@ COPY www /srv/shiny-server/www
 COPY CompleteAgeCases20190321.rds /srv/shiny-server/
 COPY CompleteLengthCases20190321.rds /srv/shiny-server/
 COPY cc.age.sample20190321.rds /srv/shiny-server/
-COPY bio.data.sample20190321.rds /srv/shiny-server/
+COPY bio.data.sample20190423.rds /srv/shiny-server/
 COPY google-analytics.js /srv/shiny-server/
 COPY README.md /srv/shiny-server/
 COPY server.R /srv/shiny-server/
