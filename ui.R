@@ -17,11 +17,11 @@ library(shinycssloaders)
 library(rgdal)
 
 shinyUI(
-        navbarPage("Species Dashboard", theme= shinytheme("cerulean"), fluid=TRUE,
+        navbarPage(id="TopLevelMenu", title="Species Dashboard", theme= shinytheme("cerulean"), fluid=TRUE,
  ##### Intro #####                    
                    tabPanel("Introduction",
                           
-                            tags$head(includeScript("google-analytics.js")),                 
+                            tags$head(includeScript("google-analytics.js")),            
                             fluidRow(
                                      column(width = 6,
                                             tabsetPanel(id= "tabs",
@@ -96,13 +96,17 @@ shinyUI(
                                 column(width = 7,
                                        fluidRow(
                                                 column(width=3,
+                                                       # selectInput("species",label="Species",
+                                                       #             choices= list("Cod","Boarfish","Haddock","Herring",
+                                                       #                           "Hake","Horse Mackerel","Ling","Mackerel",
+                                                       #                           "Megrim","White-bellied Anglerfish",
+                                                       #                           "Black-bellied Anglerfish","Plaice", "Sole","Sprat",
+                                                       #                           "Blue Whiting","Whiting","Saithe","Pollack"),
+                                                       #             selected= "Cod" ),
+                                                       # We set the species list and default selection in server.R now 
                                                        selectInput("species",label="Species",
-                                                                   choices= list("Cod","Boarfish","Haddock","Herring",
-                                                                                 "Hake","Horse Mackerel","Ling","Mackerel",
-                                                                                 "Megrim","White-bellied Anglerfish",
-                                                                                 "Black-bellied Anglerfish","Plaice", "Sole","Sprat",
-                                                                                 "Blue Whiting","Whiting","Saithe","Pollack"),
-                                                                   selected= "Cod" ),
+                                                                   choices= NULL,
+                                                                   selected= NULL ),
                                                        conditionalPanel(condition = "input.fishtab == 'A'",
                                                                         selectInput(inputId="biooptionselection", label="Select parameter", 
                                                                                     choices=list("None","Age","Sex","Presentation","Gear","Sample Type"),
@@ -198,6 +202,7 @@ shinyUI(
              ) #close tabPanel
   )#close navbarPage
 ) #close shinyUI
+
 
 
 
