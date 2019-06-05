@@ -10,18 +10,18 @@ RUN sudo chown -R shiny:shiny /var/lib/shiny-server/
 RUN Rscript -e "install.packages(c('shinythemes','shinycssloaders','FSA'), repos='https://cran.rstudio.com/')" && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 # copy shiny-server config file
 #COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
-COPY www /srv/shiny-server/www
-COPY CompleteAgeCases20190321.rds /srv/shiny-server/
-COPY CompleteLengthCases20190321.rds /srv/shiny-server/
-COPY cc.age.sample20190321.rds /srv/shiny-server/
-COPY bio.data.sample20190423.rds /srv/shiny-server/
-COPY google-analytics.js /srv/shiny-server/
-COPY README.md /srv/shiny-server/
-COPY server.R /srv/shiny-server/
-COPY ["Supplemental data.csv","/srv/shiny-server/"]
-COPY ui.R /srv/shiny-server/
-COPY FullData.rds /srv/shiny-server/
-COPY ["Data extraction and formatting.R", "/srv/shiny-server/"]
+COPY www /srv/shiny-server/speciesdash/www
+COPY CompleteAgeCases20190321.rds /srv/shiny-server/speciesdash/
+COPY CompleteLengthCases20190321.rds /srv/shiny-server/speciesdash/
+COPY cc.age.sample20190321.rds /srv/shiny-server/speciesdash/
+COPY bio.data.sample20190423.rds /srv/shiny-server/speciesdash/
+COPY google-analytics.js /srv/shiny-server/speciesdash/
+COPY README.md /srv/shiny-server/speciesdash/
+COPY server.R /srv/shiny-server/speciesdash/
+COPY ["Supplemental data.csv","/srv/shiny-server/speciesdash/"]
+COPY ui.R /srv/shiny-server/speciesdash/
+COPY FullData.rds /srv/shiny-server/speciesdash/
+COPY ["Data extraction and formatting.R", "/srv/shiny-server/speciesdash/"]
 RUN Rscript -e "install.packages(c('rgdal'), repos='https://cran.rstudio.com/')"
 EXPOSE 3838
 CMD ["/usr/bin/shiny-server.sh"]
