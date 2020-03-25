@@ -13,7 +13,7 @@ SDdata<- sqlQuery(channel,Q)
 
 
 
-saveRDS(SDdata, file = "FullData.rds")
+#saveRDS(SDdata, file = "FullData.rds")
 ###################################################
 
 ####Some of the species in table SpeciesResultSetExpanded chaned since last updates data in 2019#####
@@ -40,7 +40,7 @@ com_sp[c(3,22,24,28)]
 
 
 ####### Formatting #######
-SDdata<-readRDS("Data/FullData.rds")
+#SDdata<-readRDS("Data/FullData.rds")
 levels(as.factor(SDdata$Species))
 SDdata$Species <- trimws(SDdata$Species)
 head(SDdata) #check white space removed
@@ -87,7 +87,7 @@ dataV3 <- dataV2[!is.na(dataV2$Weight),]
 dim(dataV3)
 cc.length <- dataV3
 cc.length <- cc.length[cc.length$Weight>0,]
-saveRDS(cc.length, file= "Data/CompleteLengthCases20200319.rds") ##change to todays date before running
+#saveRDS(cc.length, file= "Data/CompleteLengthCases20200319.rds") ##change to todays date before running
 
 bio.data<- cc.length
 bio.data.sample <- sample_frac(bio.data, 0.1)
@@ -107,7 +107,7 @@ cc.age <- cc.age %>%
 cc.age <- cc.age %>%
   mutate(AgeContin = cc.age$Age + cc.age$justdecimal)
 cc.age <- cc.age[!cc.age$Age <0.1,]
-saveRDS(cc.age, file= "Data/CompleteAgeCases20200319.rds") ##change to todays date before running
+#saveRDS(cc.age, file= "Data/CompleteAgeCases20200319.rds") ##change to todays date before running
 
 #cc.age <-  readRDS(file="CompleteAgeCases20200319.rds")
 cc.age.sample <- sample_frac(cc.age, 0.1)
