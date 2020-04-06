@@ -202,7 +202,9 @@ grsp <-reactive({filter(bio.data,Species==as.character(SpeciesList[which(Species
     # Reactive year filter based on years available by species
     output$yearfilter<- renderUI({
         sliderInput("year","Years", min=min(grsp()$Year, na.rm=TRUE), max=max(grsp()$Year, na.rm=TRUE), 
-                    value =c(min(grsp()$Year, na.rm=TRUE),max(grsp()$Year, na.rm=TRUE)),sep="", step=1)
+                    # value =c(min(grsp()$Year, na.rm=TRUE),max(grsp()$Year, na.rm=TRUE)) ,sep="", step=1)##all years
+                    value =max(grsp()$Year, na.rm=TRUE) ,sep="", step=1)##by one year
+        
     })
     
     # Reactive gear filter based on gears available by species
@@ -213,14 +215,30 @@ grsp <-reactive({filter(bio.data,Species==as.character(SpeciesList[which(Species
     })
     
     #Filtering grsp() (full) data based on filters above
+    # grspnew.w<- reactive({
+    #     if(is.null(input$year[1]) || is.null(input$year[2])){
+    #         grspyear=grsp()
+    #     }else if(input$year[1]==min(grsp()$Year, na.rm=TRUE)&&input$year[2]==max(grsp()$Year, na.rm=TRUE)){
+    #         grspyear=grsp()
+    #     }else{
+    #         grspyear<- filter(grsp(), Year %in% input$year[1]:input$year[2])
+    #     }
+    #     if(input$quarter == "All" || is.null(input$quarter)){
+    #         grspqtr = grspyear
+    #     }else{
+    #         grspqtr<- filter(grspyear, Quarter %in% input$quarter )
+    #     }
+    #     if(input$gearselect == "All"|| is.null(input$gearselect)|| input$biooptionselection=="None"){
+    #         grspgear = grspqtr  #grspmonth
+    #     }else{
+    #         grspgear <- filter(grspqtr, Gear %in% input$gearselect) #grspmonth
+    #     }
+    # })
+    
     grspnew.w<- reactive({
-        if(is.null(input$year[1]) || is.null(input$year[2])){
-            grspyear=grsp()
-        }else if(input$year[1]==min(grsp()$Year, na.rm=TRUE)&&input$year[2]==max(grsp()$Year, na.rm=TRUE)){
-            grspyear=grsp()
-        }else{
-            grspyear<- filter(grsp(), Year %in% input$year[1]:input$year[2])
-        }
+        
+        grspyear<- filter(grsp(), Year %in% input$year)
+        
         if(input$quarter == "All" || is.null(input$quarter)){
             grspqtr = grspyear
         }else{
@@ -359,7 +377,9 @@ cc.a<-reactive({filter(cc.age,Species==as.character(SpeciesList[which(SpeciesLis
 # Reactive year filter based on years available by species
 output$yearfilter.a<- renderUI({
     sliderInput("year.a","Years", min=min(cc.a()$Year, na.rm=TRUE), max=max(cc.a()$Year, na.rm=TRUE), 
-                value =c(min(cc.a()$Year, na.rm=TRUE),max(cc.a()$Year, na.rm=TRUE)),sep="", step=1)
+                # value =c(min(cc.a()$Year, na.rm=TRUE),max(cc.a()$Year, na.rm=TRUE)), sep="", step=1)
+                value =max(cc.a()$Year, na.rm=TRUE), sep="", step=1)
+    #
 })
 
 # Reactive quarter filter based on quarters available by species
@@ -377,14 +397,30 @@ output$GearFilter.a <- renderUI({
 }) 
 
 #Filtering cc.a() (full) data based on filters above
+# grspage <- reactive({
+#     if(is.null(input$year.a[1]) || is.null(input$year.a[2])){
+#         grspageyear=cc.a()
+#     }else if(input$year.a[1]==min(cc.a()$Year, na.rm=TRUE)&&input$year.a[2]==max(cc.a()$Year, na.rm=TRUE)){
+#         grspageyear=cc.a()
+#     }else{
+#         grspageyear<- filter(cc.a(), Year %in% input$year.a[1]:input$year.a[2])
+#     }
+#     if(input$quarter.a == "All" || is.null(input$quarter.a)){
+#         grspageqtr = grspageyear
+#     }else{
+#         grspageqtr<- filter(grspageyear, Quarter %in% input$quarter.a )
+#     }
+#     if(input$gearselect.a == "All"|| is.null(input$gearselect.a)|| input$ageoptionselection=="None"){
+#         grspagegear = grspageqtr #grspagemonth
+#     }else{
+#         grspagegear <- filter(grspageqtr, Gear %in% input$gearselect.a)  #grspagemonth
+#     }
+# })
+
+
 grspage <- reactive({
-    if(is.null(input$year.a[1]) || is.null(input$year.a[2])){
-        grspageyear=cc.a()
-    }else if(input$year.a[1]==min(cc.a()$Year, na.rm=TRUE)&&input$year.a[2]==max(cc.a()$Year, na.rm=TRUE)){
-        grspageyear=cc.a()
-    }else{
-        grspageyear<- filter(cc.a(), Year %in% input$year.a[1]:input$year.a[2])
-    }
+    grspageyear<- filter(cc.a(), Year %in% input$year.a)
+    
     if(input$quarter.a == "All" || is.null(input$quarter.a)){
         grspageqtr = grspageyear
     }else{
