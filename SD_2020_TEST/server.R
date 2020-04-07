@@ -193,17 +193,27 @@ shinyServer(function(input, output, session){
 grsp <-reactive({filter(bio.data,Species==as.character(SpeciesList[which(SpeciesList$Species_Name==input$species),][[2]]))})
     
     # Reactive quarter filter based on quarters available by species
+    # Reactive quarter filter based on quarters available by species
     output$quarterfilter<- renderUI({
-        quarterlist <- unique(na.omit(grsp()$Quarter))
-        quarterlist2 = factor(append("All", as.character(quarterlist[1:4])))
+        quarterlist2<-c("All",levels(na.omit(as.factor(grsp()$Quarter))))
         selectInput("quarter","Quarter", choices=quarterlist2, selected = "All")
     })
     
     # Reactive year filter based on years available by species
     output$yearfilter<- renderUI({
+        list(tags$style(
+            ".irs-bar {",
+            "  border-color: transparent;",
+            "  background-color: transparent;",
+            "}",
+            ".irs-bar-edge {",
+            "  border-color: transparent;",
+            "  background-color: transparent;",
+            "}"
+        ),
         sliderInput("year","Years", min=min(grsp()$Year, na.rm=TRUE), max=max(grsp()$Year, na.rm=TRUE), 
                     # value =c(min(grsp()$Year, na.rm=TRUE),max(grsp()$Year, na.rm=TRUE)) ,sep="", step=1)##all years
-                    value =max(grsp()$Year, na.rm=TRUE) ,sep="", step=1)##by one year
+                    value =max(grsp()$Year, na.rm=TRUE) ,sep="", step=1,animate=T))##by one year
         
     })
     
@@ -378,7 +388,7 @@ cc.a<-reactive({filter(cc.age,Species==as.character(SpeciesList[which(SpeciesLis
 output$yearfilter.a<- renderUI({
     sliderInput("year.a","Years", min=min(cc.a()$Year, na.rm=TRUE), max=max(cc.a()$Year, na.rm=TRUE), 
                 # value =c(min(cc.a()$Year, na.rm=TRUE),max(cc.a()$Year, na.rm=TRUE)), sep="", step=1)
-                value =max(cc.a()$Year, na.rm=TRUE), sep="", step=1)
+                value =max(cc.a()$Year, na.rm=TRUE), sep="", step=1,animate=T)
     #
 })
 
